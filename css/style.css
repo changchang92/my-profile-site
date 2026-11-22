@@ -1,0 +1,211 @@
+/* Tailwind로 처리하기 어려운 부분만 직접 작성 */
+
+/* ===== 디자인 토큰 =====
+   기본은 스크린샷과 같은 다크 테마, html.light 에서 라이트 테마로 바뀝니다.
+   index.html 의 tailwind.config 가 이 변수들을 색상 클래스(bg-surface, text-accent 등)로 씁니다. */
+:root {
+  --bg: 28 29 33;
+  --surface: 42 43 48;
+  --surface-2: 53 55 61;
+  --line: 255 255 255;
+  --ink: 240 241 243;
+  --muted: 150 153 160;
+  --accent: 61 224 184;
+  --accent-strong: 46 201 164;
+  --on-accent: 12 22 19;
+  --shadow-card: 0 30px 60px -20px rgb(0 0 0 / 0.65), 0 12px 24px -12px rgb(0 0 0 / 0.45);
+  color-scheme: dark;
+}
+
+:root.light {
+  --bg: 233 238 237;
+  --surface: 255 255 255;
+  --surface-2: 243 247 246;
+  --line: 20 30 40;
+  --ink: 28 30 35;
+  --muted: 96 102 112;
+  --accent: 10 140 110;
+  --accent-strong: 6 118 93;
+  --on-accent: 255 255 255;
+  --shadow-card: 0 24px 48px -20px rgb(30 50 60 / 0.28), 0 8px 16px -10px rgb(30 50 60 / 0.18);
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* 고정 헤더에 가려지지 않도록 앵커 이동 시 여백 */
+section[id] {
+  scroll-margin-top: 6rem;
+}
+
+/* ===== 배경: 흐릿한 코드 텍스트 (스크린샷의 배경 장식) ===== */
+.code-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  padding: 1.5rem;
+  font-family: "JetBrains Mono", "Noto Sans KR", monospace;
+  font-size: 12px;
+  line-height: 1.8;
+  white-space: pre;
+  color: rgb(var(--ink) / 0.06);
+  user-select: none;
+  pointer-events: none;
+}
+
+/* ===== 헤더 내비게이션 ===== */
+.nav-link {
+  transition: color 0.2s ease;
+}
+
+.nav-link.active {
+  color: rgb(var(--accent));
+  font-weight: 700;
+}
+
+/* 현재 섹션은 <Home> 처럼 꺾쇠로 감싸서 강조 */
+.nav-link.active::before {
+  content: "<";
+  margin-right: 0.1rem;
+}
+
+.nav-link.active::after {
+  content: ">";
+  margin-left: 0.1rem;
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  background: rgb(var(--surface-2));
+  color: rgb(var(--ink) / 0.85);
+  transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+}
+
+.icon-btn:hover {
+  color: rgb(var(--accent));
+  transform: translateY(-1px);
+}
+
+/* ===== 버튼 ===== */
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  border: 2px solid rgb(var(--accent));
+  border-radius: 0.375rem;
+  color: rgb(var(--accent));
+  font-family: "JetBrains Mono", "Noto Sans KR", monospace;
+  font-weight: 500;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-outline:hover {
+  background: rgb(var(--accent) / 0.12);
+}
+
+.btn-solid {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  background: rgb(var(--accent));
+  color: rgb(var(--on-accent));
+  font-weight: 700;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-solid:hover {
+  background: rgb(var(--accent-strong));
+  transform: translateY(-1px);
+}
+
+/* ===== 섹션 제목 ===== */
+.section-title {
+  font-size: 1.875rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: rgb(var(--ink));
+}
+
+/* ===== 기술 스택 뱃지 ===== */
+.skill-badge {
+  padding: 0.5rem 0.9rem;
+  border-radius: 0.5rem;
+  font-family: "JetBrains Mono", "Noto Sans KR", monospace;
+  font-size: 0.875rem;
+  font-weight: 500;
+  background: rgb(var(--surface-2));
+  color: rgb(var(--ink) / 0.9);
+  border: 1px solid rgb(var(--line) / 0.1);
+  transition: transform 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.skill-badge:hover {
+  transform: translateY(-2px);
+  border-color: rgb(var(--accent) / 0.6);
+  color: rgb(var(--accent));
+}
+
+/* ===== 히어로 기술 아이콘 원형 뱃지 ===== */
+.tech-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 9999px;
+  background: rgb(var(--surface));
+  box-shadow: var(--shadow-card);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: rgb(var(--accent));
+}
+
+/* ===== 스크롤 시 나타나는 애니메이션 ===== */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ===== 프로젝트 카드 호버 =====
+   .fade-in.is-visible 의 transform: none 보다 선택자가 구체적이어서 호버 이동이 적용됨 */
+.project-card {
+  transition: opacity 0.6s ease, transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.fade-in.is-visible.project-card:hover {
+  transform: translateY(-8px);
+  border-color: rgb(var(--accent) / 0.5);
+  box-shadow: 0 0 0 1px rgb(var(--accent) / 0.25), 0 30px 60px -15px rgb(0 0 0 / 0.7), 0 0 30px rgb(var(--accent) / 0.15);
+}
+
+/* 움직임을 줄이는 설정을 사용하는 사용자 배려 */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .fade-in,
+  .project-card,
+  .skill-badge,
+  .icon-btn,
+  .btn-solid {
+    transition: none;
+    transform: none;
+  }
+}
